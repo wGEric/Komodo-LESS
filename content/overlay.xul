@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<overlay id="tababbreviations" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script type="application/x-javascript" src="chrome://less/content/less-ext.js" />
+
+    <commandset id="allcommands">
+      <command id="Tasks:LessCompileFile" oncommand="extensions.less.compileFile(true);"/>
+      <command id="Tasks:LessCompileBuffer" oncommand="extensions.less.compileBuffer();"/>
+      <command id="Tasks:LessCompileSelection" oncommand="extensions.less.compileSelection();"/>
+    </commandset>
+
+    <menupopup id="popup_tools">
+      <menu id="menu_less" label="LESS">
+        <menupopup id="menu_less_popup">
+          <menuitem id="menu_less_file"
+                  label="Compile Saved File into CSS"
+                  observes="Tasks:LessCompileFile"
+                  class="menu-iconic-wide" />
+          <menuitem id="menu_less_buffer"
+                  label="Compile Current Buffer into CSS"
+                  observes="Tasks:LessCompileBuffer"
+                  class="menu-iconic-wide" />
+          <menuitem id="menu_less_selection"
+                  label="Compile Selection into CSS"
+                  observes="Tasks:LessCompileSelection"
+                  class="menu-iconic-wide" />
+        </menupopup>
+      </menu>
+    </menupopup>
+    
+    <menupopup id="editorContextMenu">
+      <menu id="menu_less_context" label="LESS">
+          <menupopup id="menu_less_context_popup">
+            <menuitem id="menu_less_context_file"
+                    label="Compile Saved File into CSS"
+                    observes="Tasks:LessCompileFile"
+                    class="menu-iconic-wide" />
+            <menuitem id="menu_less_context_buffer"
+                    label="Compile Current Buffer into CSS"
+                    observes="Tasks:LessCompileBuffer"
+                    class="menu-iconic-wide" />
+            <menuitem id="menu_less_context_selection"
+                    label="Compile Selection into CSS"
+                    observes="Tasks:LessCompileSelection"
+                    class="menu-iconic-wide" />
+          </menupopup>
+      </menu>
+    </menupopup>
+</overlay>

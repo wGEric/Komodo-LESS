@@ -1,0 +1,2 @@
+content less content/
+overlay chrome://komodo/content/komodo.xul chrome://less/content/overlay.xul
