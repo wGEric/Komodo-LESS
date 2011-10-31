@@ -4,7 +4,7 @@
     <Description about="urn:mozilla:install-manifest">
         <em:id>less@ericfaerber.com</em:id>
         <em:name>LESS</em:name>
-        <em:version>0.0.1</em:version>
+        <em:version>0.0.2</em:version>
         <em:description>Adds support for LESS (CSS)</em:description>
         <em:creator>Eric Faerber</em:creator>
         <em:homepageURL></em:homepageURL>

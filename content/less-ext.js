@@ -23,14 +23,14 @@ if (typeof(extensions.less) === 'undefined') extensions.less = { version : '0.0.
 			file = d.file,
 			path = (file) ? file.path : null;
 		
-		konsole.popup();
-		
 		if (!file) {
+			konsole.popup();
 			self._log('Please save the file first', konsole.S_ERROR);
 			return;
 		}
 
 		if (file.ext == '.less') {
+			konsole.popup();
 			self._log('Compiling LESS file', konsole.S_DEBUG);
 		
 			parser.parse(d.buffer, function(err, tree) {
@@ -42,6 +42,7 @@ if (typeof(extensions.less) === 'undefined') extensions.less = { version : '0.0.
 			});
 		} else {
 			if (showWarning) {
+				konsole.popup();
 				self._log('Not a LESS file', konsole.S_ERROR);
 			}
 		}
