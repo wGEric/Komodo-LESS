@@ -40,9 +40,9 @@
  * Command Output tab tool
  * To code with style, and use styles :)
  */
-if (typeof(konsole) == 'undefined' || konsole.version < '1.1') konsole = {
+if (typeof(konsole) == 'undefined' || konsole.version < '1.2') konsole = {
 
-  version     : '1.1',
+  version     : '1.2',
   
   S_DEFAULT   : 0,
   S_STRONG    : 1,
@@ -78,7 +78,8 @@ if (typeof(konsole) == 'undefined' || konsole.version < '1.1') konsole = {
    * Initializes scimoz object and defines basic "terminal" styles
    */
   init : function() {
-    this.scimoz = document.getElementById('runoutput-scintilla').scimoz;
+    var w = window.frames['runoutput-desc-tabpanel'];
+    this.scimoz = (w) ? w.document.getElementById('runoutput-scintilla').scimoz : document.getElementById('runoutput-scintilla').scimoz;
     this.NL = ["\r\n", "\n", "\r"][this.scimoz.eOLMode];
     this.scimoz.lexer = 0; // no lexer please, it's a humble terminal thingie
     this.scimoz.styleBits = 8; // for moar styles
@@ -94,7 +95,7 @@ if (typeof(konsole) == 'undefined' || konsole.version < '1.1') konsole = {
   popup : function() {
     ko.run.output.show(window, false);
     var deckWidget = document.getElementById('runoutput-deck');
-    if (deckWidget.getAttribute("selectedIndex") != 0)
+    if (deckWidget && deckWidget.getAttribute("selectedIndex") != 0)
       ko.run.output.toggleView();    
   },
   /**

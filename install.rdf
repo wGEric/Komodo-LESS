@@ -4,7 +4,7 @@
     <Description about="urn:mozilla:install-manifest">
         <em:id>less@ericfaerber.com</em:id>
         <em:name>LESS</em:name>
-        <em:version>0.0.2</em:version>
+        <em:version>1.0.0</em:version>
         <em:description>Adds support for LESS (CSS)</em:description>
         <em:creator>Eric Faerber</em:creator>
         <em:homepageURL></em:homepageURL>
@@ -15,7 +15,7 @@
                 <!-- Komodo IDE's uuid -->
                 <em:id>{36E66FA0-F259-11D9-850E-000D935D3368}</em:id>
                 <em:minVersion>6.1</em:minVersion>
-                <em:maxVersion>6.*</em:maxVersion>
+                <em:maxVersion>7.*</em:maxVersion>
             </Description>
         </em:targetApplication>
         <em:targetApplication>
@@ -23,7 +23,7 @@
                 <!-- Komodo Edit's uuid -->
                 <em:id>{b1042fb5-9e9c-11db-b107-000d935d3368}</em:id>
                 <em:minVersion>6.1</em:minVersion>
-                <em:maxVersion>6.*</em:maxVersion>
+                <em:maxVersion>7.*</em:maxVersion>
             </Description>
         </em:targetApplication>
     </Description>

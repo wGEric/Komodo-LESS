@@ -10,7 +10,7 @@ xtk.load('chrome://less/content/less.min.js');
  * Namespaces
  */
 if (typeof(extensions) === 'undefined') extensions = {};
-if (typeof(extensions.less) === 'undefined') extensions.less = { version : '0.0.1' };
+if (typeof(extensions.less) === 'undefined') extensions.less = { version : '1.0.0' };
 
 (function() {
 	var self = this,
@@ -19,7 +19,7 @@ if (typeof(extensions.less) === 'undefined') extensions.less = { version : '0.0.
 	this.compileFile = function(showWarning) {
 		showWarning = showWarning || false;
 		
-		var d = ko.views.manager.currentView.document,
+		var d = ko.views.manager.currentView.document || ko.views.manager.currentView.koDoc,
 			file = d.file,
 			path = (file) ? file.path : null;
 		
@@ -49,7 +49,7 @@ if (typeof(extensions.less) === 'undefined') extensions.less = { version : '0.0.
 	};
 	
 	this.compileBuffer = function() {
-		var d = ko.views.manager.currentView.document;
+		var d = ko.views.manager.currentView.document || ko.views.manager.currentView.koDoc;
 		
 		parser.parse(d.buffer, function(err, tree) {
 			d.buffer = tree.toCSS();
