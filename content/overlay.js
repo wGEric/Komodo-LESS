@@ -10,19 +10,20 @@ xtk.load('chrome://less/content/less.min.js');
  * Namespaces
  */
 if (typeof(extensions) === 'undefined') extensions = {};
-if (typeof(extensions.less) === 'undefined') extensions.less = { version : '1.0.0' };
+if (typeof(extensions.less) === 'undefined') extensions.less = { version : '1.1.0' };
 
 (function() {
 	var self = this,
 		parser = new(less.Parser);
-	
-	this.compileFile = function(showWarning) {
+
+	this.compileFile = function(showWarning, compress) {
 		showWarning = showWarning || false;
-		
+		compress = compress || false;
+
 		var d = ko.views.manager.currentView.document || ko.views.manager.currentView.koDoc,
 			file = d.file,
 			path = (file) ? file.path : null;
-		
+
 		if (!file) {
 			konsole.popup();
 			self._log('Please save the file first', konsole.S_ERROR);
@@ -32,11 +33,11 @@ if (typeof(extensions.less) === 'undefined') extensions.less = { version : '1.0.
 		if (file.ext == '.less') {
 			konsole.popup();
 			self._log('Compiling LESS file', konsole.S_DEBUG);
-		
+
 			parser.parse(d.buffer, function(err, tree) {
-				var output = tree.toCSS(),
+				var output = tree.toCSS({'compress': compress}),
 					newFilename = path.replace('.less', '.css');
-			
+
 				self._saveFile(newFilename, output);
 				self._log('File saved as: ' + newFilename, konsole.S_OK);
 			});
@@ -47,47 +48,63 @@ if (typeof(extensions.less) === 'undefined') extensions.less = { version : '1.0.
 			}
 		}
 	};
-	
-	this.compileBuffer = function() {
+
+	this.compileCompressFile = function(showWarning) {
+		this.compileFile(showWarning, true);
+	};
+
+	this.compileBuffer = function(compress) {
+		compress = compress || false;
+
 		var d = ko.views.manager.currentView.document || ko.views.manager.currentView.koDoc;
-		
+
 		parser.parse(d.buffer, function(err, tree) {
-			d.buffer = tree.toCSS();
+			d.buffer = tree.toCSS({'compress': compress});
 		});
 	};
-	
-	this.compileSelection = function() {
+
+	this.compileCompressBuffer = function() {
+		this.compileBuffer(true);
+	}
+
+	this.compileSelection = function(compress) {
+		compress = compress || false;
+
 		var view = ko.views.manager.currentView,
 			scimoz = view.scintilla.scimoz;
 			text = scimoz.selText;
-			
+
 		parser.parse(text, function(err, tree) {
-			var css = tree.toCSS();
-			
+			var css = tree.toCSS({'compress': compress});
+
 			scimoz.targetStart = scimoz.currentPos;
 			scimoz.targetEnd = scimoz.anchor;
 			scimoz.replaceTarget(css.length, css);
 		});
 	};
-	
+
+	this.compileCompressSelection = function() {
+		this.compileSelection(true);
+	}
+
 	this._saveFile = function(filepath, filecontent) {
 		self._log('Saving file', konsole.S_DEBUG);
-		
+
 		var file = Components
 			.classes["@activestate.com/koFileEx;1"]
 			.createInstance(Components.interfaces.koIFileEx);
 		file.path = filepath;
-		
+
 		file.open('w');
-		
+
 		file.puts(filecontent);
 		file.close();
-		
+
 		return;
 	};
-	
+
 	this._log = function(message, style) {
 		konsole.writeln('[LESS] ' + message, style);
 	};
-	
+
 }).apply(extensions.less);

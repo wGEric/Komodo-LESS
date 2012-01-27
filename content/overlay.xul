@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <overlay id="tababbreviations" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<script type="application/x-javascript" src="chrome://less/content/less-ext.js" />
+	<script type="application/x-javascript" src="chrome://less/content/overlay.js" />
 
     <commandset id="allcommands">
       <command id="Tasks:LessCompileFile" oncommand="extensions.less.compileFile(true);"/>
       <command id="Tasks:LessCompileBuffer" oncommand="extensions.less.compileBuffer();"/>
       <command id="Tasks:LessCompileSelection" oncommand="extensions.less.compileSelection();"/>
+	  <command id="Tasks:LessCompileFileCompress" oncommand="extensions.less.compileCompressFile(true);"/>
+      <command id="Tasks:LessCompileBufferCompress" oncommand="extensions.less.compileCompressBuffer();"/>
+      <command id="Tasks:LessCompileSelectionCompress" oncommand="extensions.less.compileCompressSelection();"/>
     </commandset>
 
     <menupopup id="popup_tools">
@@ -23,10 +26,23 @@
                   label="Compile Selection into CSS"
                   observes="Tasks:LessCompileSelection"
                   class="menu-iconic-wide" />
+		  <menuseparator />
+		  <menuitem id="menu_less_file_compress"
+                  label="Compile and Compress Saved File into CSS"
+                  observes="Tasks:LessCompileFileCompress"
+                  class="menu-iconic-wide" />
+		  <menuitem id="menu_less_buffer_compress"
+                  label="Compile and Compress Current Buffer into CSS"
+                  observes="Tasks:LessCompileBufferCompress"
+                  class="menu-iconic-wide" />
+		  <menuitem id="menu_less_selection_compress"
+                  label="Compile and Compress Selection into CSS"
+                  observes="Tasks:LessCompileSelectionCompress"
+                  class="menu-iconic-wide" />
         </menupopup>
       </menu>
     </menupopup>
-    
+
     <menupopup id="editorContextMenu">
       <menu id="menu_less_context" label="LESS">
           <menupopup id="menu_less_context_popup">
@@ -42,6 +58,19 @@
                     label="Compile Selection into CSS"
                     observes="Tasks:LessCompileSelection"
                     class="menu-iconic-wide" />
+			<menuseparator />
+			<menuitem id="menu_less_context_file_compress"
+                  label="Compile and Compress Saved File into CSS"
+                  observes="Tasks:LessCompileFileCompress"
+                  class="menu-iconic-wide" />
+			<menuitem id="menu_less_context_buffer_compress"
+                  label="Compile and Compress Current Buffer into CSS"
+                  observes="Tasks:LessCompileBufferCompress"
+                  class="menu-iconic-wide" />
+			<menuitem id="menu_less_context_selection_compress"
+                  label="Compile and Compress Selection into CSS"
+                  observes="Tasks:LessCompileSelectionCompress"
+                  class="menu-iconic-wide" />
           </menupopup>
       </menu>
     </menupopup>

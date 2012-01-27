@@ -132,7 +132,7 @@ if (typeof(konsole) == 'undefined' || konsole.version < '1.2') konsole = {
    */
   error : function(exception) {
     // If komodo has an open document, so it's not exiting
-    if (ko.views.manager.currentView.document) {
+    if (ko.views.manager.currentView.document || ko.views.manager.currentView.koDoc) {
       this.popup();
       this.write('ERROR: ', this.S_ERROR);
       this.write(exception.message + ' ', this.S_STRONG);
