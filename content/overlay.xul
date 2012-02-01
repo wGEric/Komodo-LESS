@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<overlay id="tababbreviations" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<overlay id="less" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	<script type="application/x-javascript" src="chrome://less/content/overlay.js" />
 
     <commandset id="allcommands">

@@ -10,11 +10,14 @@ xtk.load('chrome://less/content/less.min.js');
  * Namespaces
  */
 if (typeof(extensions) === 'undefined') extensions = {};
-if (typeof(extensions.less) === 'undefined') extensions.less = { version : '1.1.0' };
+if (typeof(extensions.less) === 'undefined') extensions.less = { version : '1.2.0' };
 
 (function() {
 	var self = this,
 		parser = new(less.Parser);
+
+	var prefs = Components.classes["@mozilla.org/preferences-service;1"]
+        .getService(Components.interfaces.nsIPrefService).getBranch("extensions.less.");
 
 	this.compileFile = function(showWarning, compress) {
 		showWarning = showWarning || false;
@@ -22,16 +25,14 @@ if (typeof(extensions.less) === 'undefined') extensions.less = { version : '1.1.
 
 		var d = ko.views.manager.currentView.document || ko.views.manager.currentView.koDoc,
 			file = d.file,
-			path = (file) ? file.path : null;
+			path = (file) ? file.URI : null;
 
 		if (!file) {
-			konsole.popup();
 			self._log('Please save the file first', konsole.S_ERROR);
 			return;
 		}
 
 		if (file.ext == '.less') {
-			konsole.popup();
 			self._log('Compiling LESS file', konsole.S_DEBUG);
 
 			parser.parse(d.buffer, function(err, tree) {
@@ -39,11 +40,10 @@ if (typeof(extensions.less) === 'undefined') extensions.less = { version : '1.1.
 					newFilename = path.replace('.less', '.css');
 
 				self._saveFile(newFilename, output);
-				self._log('File saved as: ' + newFilename, konsole.S_OK);
+				self._log('File saved', konsole.S_OK);
 			});
 		} else {
 			if (showWarning) {
-				konsole.popup();
 				self._log('Not a LESS file', konsole.S_ERROR);
 			}
 		}
@@ -88,7 +88,7 @@ if (typeof(extensions.less) === 'undefined') extensions.less = { version : '1.1.
 	}
 
 	this._saveFile = function(filepath, filecontent) {
-		self._log('Saving file', konsole.S_DEBUG);
+		self._log('Saving file to ' + filepath, konsole.S_DEBUG);
 
 		var file = Components
 			.classes["@activestate.com/koFileEx;1"]
@@ -104,7 +104,10 @@ if (typeof(extensions.less) === 'undefined') extensions.less = { version : '1.1.
 	};
 
 	this._log = function(message, style) {
-		konsole.writeln('[LESS] ' + message, style);
+		if (style == konsole.S_ERROR || prefs.getBoolPref('showMessages')) {
+			konsole.popup();
+			konsole.writeln('[LESS] ' + message, style);
+		}
 	};
 
 }).apply(extensions.less);
